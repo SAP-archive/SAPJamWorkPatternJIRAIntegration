@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta name="decorator" content="atl.popup">
+  </head>
+  <body class="auth-config">
+    <form id="admin" name="admin" class="aui" action="" method="POST">
+
+    <fieldset>
+      <input type="hidden" name="outbound_auth_enabled" id="outbound_auth_enabled" value="true" />
+      
+      <div class="field-group">
+        <label>Status</label>
+        #if ($enabled)
+          <span class="field-value status-configured">Configured</span>
+        #else
+          <span class="field-value status-not-configured">Not Configured</span>
+        #end
+      </div>
+    
+      <div class="field-group">
+        <label for="outbound_auth_key">OAuth Client Key
+          #if (!$enabled)<span class="aui-icon icon-required"></span>#end
+        </label>
+        
+        #if ($enabled)
+          <span class="field-value" id="outbound_auth_key" name="outbound_auth_key">$!outbound_auth_key</span>
+        #else
+          <input type="text" name="outbound_auth_key" id="outbound_auth_key" class="string text" value="$!outbound_auth_key"/>
+        #end
+      </div>
+
+      <div class="field-group">
+        <label for="outbound_provider_id">SAML IDP ID
+          #if (!$enabled)<span class="aui-icon icon-required"></span>#end
+        </label>
+        
+        #if ($enabled)
+          <span class="field-value" id="outbound_provider_id" name="outbound_provider_id">$!outbound_provider_id</span>
+        #else
+          <input type="text" name="outbound_provider_id" id="outbound_provider_id" class="string text" value="$!outbound_provider_id"/>
+        #end
+      </div>
+
+      <div class="field-group">
+        <label for="outbound_x509_cert">X509 Certificate
+          #if (!$enabled)<span class="aui-icon icon-required"></span>#end
+        </label>
+        
+        #if ($enabled)
+          <textarea readonly class="textarea" rows="6" id="outbound_x509_cert" name="outbound_x509_cert">$!outbound_x509_cert</textarea>
+        #else
+          <textarea class="textarea" rows="6" id="outbound_x509_cert" name="outbound_x509_cert">$!outbound_x509_cert</textarea>
+        #end
+      </div>
+
+      <div class="field-group">
+        <label for="outbound_private_key">Private Key
+          #if (!$enabled)<span class="aui-icon icon-required"></span>#end
+        </label>
+        
+        #if ($enabled)
+          <textarea readonly class="textarea" rows="6" id="outbound_private_key" name="outbound_private_key">$!outbound_private_key</textarea>
+        #else
+          <textarea class="textarea" rows="6" id="outbound_private_key" name="outbound_private_key">$!outbound_private_key</textarea>
+        #end
+      </div>
+
+      <div class="buttons-container">
+        <div class="buttons">
+          #if ($enabled)
+            <input class="button submit"
+                   type="button"
+                   value="Delete"
+                   onclick="var form = document.getElementById('admin'); document.getElementById('outbound_auth_enabled').value = false; form.submit();" />
+          #else
+            <input class="button submit" type="submit" value="Save" />
+          #end                   
+        </div>
+      </div>
+    </fieldset>
+    </form>
+  </body>
+</html>

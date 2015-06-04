@@ -1,0 +1,37 @@
+<html>
+	<head>
+    <title>$i18n.getText("sapjam.issue.action.feature_in_group")</title>
+  </head>
+
+  <body>
+    <h1>$i18n.getText("sapjam.issue.action.feature_in_group")</h1>
+
+    <form action="/secure/FeatureInGroupAction.jspa" class="aui" method="post">
+      <div class="form-body">
+        <div>
+          <label>$i18n.getText("sapjam.issue.dialog.feature_in_group.group_name")</label>
+        </div>
+        <div>
+          <select name="groupId" size="15" style="width: 100%">
+          #foreach ($group in $action.groupsList)
+            <option value="$group.Id">$group.Name</option>
+          #end
+          </select>
+        </div>
+      </div>
+
+      <div class="hidden">
+        <input name="id" type="hidden" value="${action.id}">
+        <input name="groupIdToNameHt" type="hidden" value='${action.groupIdToNameHt}'>
+      </div>
+
+      <div class="buttons-container form-footer">
+        <div class="buttons">
+          <input class="button" id="feature-in-group-submit" type="submit" value="$i18n.getText("sapjam.issue.dialog.feature_in_group.feature")">
+          <a class="cancel" href="/browse/${action.issue.key}" id="feature-in-group-cancel">$i18n.getText("sapjam.issue.dialog.create_group.cancel")</a>
+        </div>
+      </div>
+    </form>
+  </body>
+</html>
+

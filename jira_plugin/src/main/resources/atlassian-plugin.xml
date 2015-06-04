@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<atlassian-plugin key="${project.groupId}.${project.artifactId}" name="${project.name}" plugins-version="2">
+  <plugin-info>
+    <description>${project.description}</description>
+    <version>${project.version}</version>
+    <vendor name="${project.organization.name}" url="${project.organization.url}"/>
+    <param name="plugin-icon">images/pluginIcon.png</param>
+    <param name="plugin-logo">images/pluginLogo.png</param>
+  </plugin-info>
+  <!-- add our i18n resource -->
+  <resource type="i18n" name="i18n" location="jam-plugin"/>
+  
+  <!-- add our web resources -->
+  <web-resource key="jam-plugin-resources" name="jam-plugin Web Resources">
+    <dependency>com.atlassian.auiplugin:ajs</dependency>
+    <resource type="download" name="images/" location="/images"/>
+    <context>jam-plugin</context>
+  </web-resource>
+  
+  <!-- OData annotations -->
+  <resource type="download" name="annotations.xml" location="/annotations.xml">
+    <property key="content-type" value="application/xml"/>
+  </resource>
+
+  <!-- SAP Jam Application Link -->
+  <applinks-application-type key="sapjam" name="sapjam" class="com.sap.jam.samples.jira.plugin.applink.JamApplicationType">
+  	<manifest-producer class="com.sap.jam.samples.jira.plugin.applink.JamManifestProducer"/>
+  </applinks-application-type>
+  
+  <!-- SAP Jam Authenticator -->
+  <applinks-authentication-provider key="sapjam-auth-outbound-provider" i18n-name-key="sapjam.auth" class="com.sap.jam.samples.jira.plugin.applink.JamAuthenticationProviderPluginModule"/>
+  
+  <servlet
+      key="sapjam-auth-outbound-configuration"
+      name="SAP Jam Authentication Outbound Configuration Servlet"
+      class="com.sap.jam.samples.jira.plugin.servlet.JamOutboundConfigurationServlet">
+      <url-pattern>/sapjam/config/outbound/*</url-pattern>
+  </servlet>
+  
+  <supported-inbound-authentication key="jira-inbound-sapjam" class="com.sap.jam.samples.jira.plugin.applink.JamAuthenticationProvider" application="jira"/>
+  
+  <servlet
+      key="sapjam-auth-inbound-configuration"
+      name="SAP Jam Authentication Inbound Configuration Servlet"
+      class="com.sap.jam.samples.jira.plugin.servlet.JamInboundConfigurationServlet">
+      <url-pattern>/sapjam/config/inbound/*</url-pattern>
+  </servlet>
+  
+  <servlet
+  	  key="sapjam-saml-oauth-token-service"
+  	  name="SAP Jam SAML OAuth Token Service"
+  	  class="com.sap.jam.samples.jira.plugin.servlet.SAMLOAuthTokenServlet">
+  	  <url-pattern>/sapjam/auth/token</url-pattern>
+  </servlet>
+  
+  <!-- The SAML OAuth Token Service parses the OAuth 2.0 clientID and clientSecret from the incoming POST Basic authentication header -->
+  <servlet-filter key="sapjam-saml-oauth-token-filter" class="com.sap.jam.samples.jira.plugin.filter.SAMLOAuthTokenFilter" location="before-login">
+      <url-pattern>/plugins/servlet/sapjam/auth/token</url-pattern>
+      <dispatcher>FORWARD</dispatcher>
+      <dispatcher>REQUEST</dispatcher>
+  </servlet-filter>
+  
+  <!-- Jam's implementation of the token service will persist tokens through JIRA's ActiveObjects component -->
+  <ao key="sapjam-ao-module">
+    <description>The ActiveObjects module for SAP Jam Authentication</description>
+    <entity>com.sap.jam.samples.jira.plugin.ao.ExObjMapping</entity>
+    <entity>com.sap.jam.samples.jira.plugin.ao.JamPluginTimestamp</entity>
+    <entity>com.sap.jam.samples.jira.plugin.ao.MemberMapping</entity>
+    <entity>com.sap.jam.samples.jira.plugin.ao.OAuth2Token</entity>
+  </ao>
+  
+  <!-- Here's a little hack to get the ActiveObjects interface via ComponentManager instead of constructor injection -->
+  <component key="sapjam-ao-wrapper" class="com.sap.jam.samples.jira.plugin.components.AOWrapperImpl" public="true">
+    <description>ActiveObjects injection wrapper</description>
+    <interface>com.sap.jam.samples.jira.plugin.components.AOWrapper</interface>
+  </component>
+
+  <webwork1 key="jam-issue-actions" class="java.lang.Object">
+    <actions>
+      <action name="com.sap.jam.samples.jira.plugin.issue.CreateIssueGroupActionSupport" alias="CreateGroupAction">
+        <view name="input">/templates/issue/create-group.vm</view>
+        <view name="error">/templates/issue/create-group-error.vm</view>
+      </action>
+      <action name="com.sap.jam.samples.jira.plugin.issue.FeatureIssueInGroupActionSupport" alias="FeatureInGroupAction">
+        <view name="input">/templates/issue/feature-in-group.vm</view>
+        <view name="error">/templates/issue/feature-in-group-error.vm</view>
+      </action>
+    </actions>
+  </webwork1>
+
+    <web-section key="sapjam-issue-section" weight="40" location="opsbar-operations">
+    </web-section>  
+
+    <web-item key="sapjam-issue-action-create-group" section="sapjam-issue-section">
+      <label key="sapjam.issue.action.create_group" />
+      <link>/secure/CreateGroupAction!default.jspa?id=$issue.Id</link> 
+      <styleClass>trigger-dialog</styleClass>
+      <condition class="com.sap.jam.samples.jira.plugin.issue.CanAccessJamPluginCondition" />
+    </web-item>
+
+    <web-item key="sapjam-issue-action-feature-in-group" section="sapjam-issue-section">
+      <label key="sapjam.issue.action.feature_in_group" />
+      <link>/secure/FeatureInGroupAction!default.jspa?id=$issue.Id</link> 
+      <styleClass>trigger-dialog</styleClass>
+      <condition class="com.sap.jam.samples.jira.plugin.issue.CanAccessJamPluginCondition" />
+    </web-item>
+
+    <web-panel key="sapjam-groups" location="atl.jira.view.issue.right.context">
+      <label key="sapjam.issue.panel.groups" />
+      <resource type="velocity" name="view" location="templates/issue/groups.vm"/>
+      <context-provider class="com.sap.jam.samples.jira.plugin.issue.GroupListingContextProvider" />
+      <condition class="com.sap.jam.samples.jira.plugin.issue.CanAccessJamPluginCondition" />
+    </web-panel>
+
+    <!-- feed widget panel -->
+    <web-panel key="jam-feed" location="atl.jira.view.issue.left.context">
+      <label key="sapjam.issue.panel.feed" />
+      <resource type="velocity" name="view" location="templates/issue/feed-panel.vm"/>
+      <context-provider class="com.sap.jam.samples.jira.plugin.issue.FeedPanelContextProvider" />
+      <condition class="com.sap.jam.samples.jira.plugin.issue.CanAccessJamPluginCondition">
+        <param name="displayIfNewerThanJam">true</param>
+      </condition>
+    </web-panel>
+
+<!-- Exposing JIRA as an OData Service -->
+  <servlet name="JIRA OData Service" i18n-name-key="odata-servlet.name" key="jam-jira-odata-servlet" class="org.apache.olingo.odata2.core.servlet.ODataServlet">
+    <description key="odata-servlet.description">JIRA OData Service</description>
+    <url-pattern>/sapjam/api/OData/*</url-pattern>
+    <init-param>
+      <param-name>org.apache.olingo.odata2.service.factory</param-name>
+      <param-value>com.sap.jam.samples.jira.plugin.servlet.JIRAODataServiceFactory</param-value>
+    </init-param>
+  </servlet>
+
+  <!-- Event listener - posts JIRA events to Jam -->
+  <component key="eventListener" class="com.sap.jam.samples.jira.plugin.components.JamEventListener">
+     <description>Posts JIRA events to Jam</description>
+  </component>
+
+  <!-- Component imports -->
+  <component-import key="applicationProperties" interface="com.atlassian.sal.api.ApplicationProperties"/>
+  <component-import key="i18nResolver" interface="com.atlassian.sal.api.message.I18nResolver"/>
+  <component-import key="templateRenderer" interface="com.atlassian.templaterenderer.TemplateRenderer" filter=""/>
+  <component-import key="eventPublisher" interface="com.atlassian.event.api.EventPublisher"/>
+  <component-import key="userManager" interface="com.atlassian.sal.api.user.UserManager" filter=""/>
+  <component-import key="loginUriProvider" interface="com.atlassian.sal.api.auth.LoginUriProvider" filter=""/>
+  <component-import key="pluginSettingsFactory" interface="com.atlassian.sal.api.pluginsettings.PluginSettingsFactory" filter=""/>
+
+  <component-import key="applicationLinkService" interface="com.atlassian.applinks.api.ApplicationLinkService"/>
+  <component-import key="internalHostApplication" interface="com.atlassian.applinks.host.spi.InternalHostApplication"/>
+  <component-import key="authenticationConfigurationManager" interface="com.atlassian.applinks.spi.auth.AuthenticationConfigurationManager"/>
+
+  <component-import key="requestFactory" interface="com.atlassian.sal.api.net.RequestFactory"/>
+
+  <component-import key="activeObjects" interface="com.atlassian.activeobjects.external.ActiveObjects"/>
+
+  
+</atlassian-plugin>

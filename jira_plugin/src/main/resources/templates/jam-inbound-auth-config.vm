@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta name="decorator" content="atl.popup">
+  </head>
+  <body class="auth-config">
+    <form id="admin" class="aui" action="" method="POST">
+    
+    <fieldset>
+      <input type="hidden" name="inbound_auth_enabled" id="inbound_auth_enabled" value="true" />
+      
+      <div class="field-group">
+        <label>Status</label>
+        #if ($enabled)
+          <span class="field-value status-configured">Configured</span>
+        #else
+          <span class="field-value status-not-configured">Not Configured</span>
+        #end
+      </div>
+    
+      <div class="field-group">
+        <label for="inbound_auth_key">Client ID</label>
+        
+        #if ($enabled)
+          <span class="field-value" id="inbound_auth_key" name="inbound_auth_key">$!inbound_auth_key</span>
+        #else
+          <span class="field-value" id="inbound_auth_key" name="inbound_auth_key">will be generated</span>
+          <div class="description">The client ID will be displayed when the configuration is saved</div>
+        #end
+      </div>
+
+      <div class="field-group">
+        <label for="inbound_auth_secret">Client Secret</label>
+        
+        #if ($enabled)
+          <span class="field-value" id="inbound_auth_secret" name="inbound_auth_secret">$!inbound_auth_secret</span>
+        #else
+          <span class="field-value" id="inbound_auth_secret" name="inbound_auth_secret">will be generated</span>
+          <div class="description">The client secret will be displayed when the configuration is saved</div>
+        #end
+      </div>
+
+      <div class="field-group">
+        <label for="inbound_provider_id">SAML IDP ID
+          #if (!$enabled)<span class="aui-icon icon-required"></span>#end
+        </label>
+        
+        #if ($enabled)
+          <span class="field-value" id="inbound_provider_id" name="inbound_provider_id">$!inbound_provider_id</span>
+        #else
+          <input type="text" name="inbound_provider_id" id="inbound_provider_id" class="string text" value="$!inbound_provider_id"/>
+        #end
+      </div>
+
+      <div class="field-group">
+        <label for="inbound_x509_cert">X509 Certificate
+          #if (!$enabled)<span class="aui-icon icon-required"></span>#end
+        </label>
+        
+        #if ($enabled)
+          <textarea readonly class="textarea" rows="6" id="inbound_x509_cert" name="inbound_x509_cert">$!inbound_x509_cert</textarea>
+        #else
+          <textarea class="textarea" rows="6" id="inbound_x509_cert" name="inbound_x509_cert">$!inbound_x509_cert</textarea>
+        #end
+      </div>
+
+      <div class="buttons-container">
+        <div class="buttons">
+          #if ($enabled)
+            <input class="button submit"
+                   type="button"
+                   value="Delete"
+                   onclick="var form = document.getElementById('admin'); document.getElementById('inbound_auth_enabled').value = false; form.submit();" />
+          #else
+            <input class="button submit" type="submit" value="Save" />
+          #end                   
+        </div>
+      </div>
+    </fieldset>
+    </form>
+
+  </body>
+</html>

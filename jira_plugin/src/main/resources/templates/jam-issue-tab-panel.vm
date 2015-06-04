@@ -1,0 +1,11 @@
+#disable_html_escaping()
+<div id="feed_entry-$feedEntry.id" class="issue-data-block activity-comment">
+  <div class="verbose actionContainer">
+     <div class="action-details">
+       $feedEntry.author $feedEntry.action - $feedEntry.dateString
+     </div>
+     <div class="action-body">
+       <p>$feedEntry.text</p>
+     </div>
+  </div>
+</div>

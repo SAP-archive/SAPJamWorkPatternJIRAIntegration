@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:Reference>
+    <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+  </edmx:Reference>
+  <edmx:Reference>
+    <edmx:Include Alias="Communication" Namespace="com.sap.vocabularies.Communication.v1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="http://docs.oasis-open.org/odata/odata/v4.0/cs01/vocabularies/Org.OData.Measures.V1.xml">
+    <edmx:Include Alias="Measures" Namespace="Org.OData.Measures.V1"/>
+  </edmx:Reference>
+  <edmx:Reference>
+    <edmx:Include Alias="JIRA" Namespace="com.sap.jam.samples.jira"/>
+  </edmx:Reference>
+  <edmx:DataServices>
+    <Schema Alias="JiraAnnotation" Namespace="com.sap.jam.samples.jira.Annotation" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <Annotations Target="JIRA.Filter">
+        <Annotation Term="UI.HeaderInfo">
+          <Record>
+            <PropertyValue Property="TypeName" String="Issue Filter"/>
+            <PropertyValue Property="TypeNamePlural" String="Issue Filters"/>
+            <PropertyValue Property="ImageUrl" String="/images/exobj/invoice/invoice_grey_48.png"/>
+            <PropertyValue Property="Title">
+              <Record>
+                <PropertyValue Property="Value" Path="Name"/>
+              </Record>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.Identification">
+          <Collection>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Label" String="Name"/>
+              <PropertyValue Property="Value" Path="Name"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Label" String="Description"/>
+              <PropertyValue Property="Value" Path="Description"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Label" String="Search String"/>
+              <PropertyValue Property="Value" Path="SearchString"/>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.LineItem">
+          <Collection>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Label" String="Name"/>
+              <PropertyValue Property="Value" Path="Name"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Label" String="Description"/>
+              <PropertyValue Property="Value" Path="Description"/>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.Facets">
+          <Collection>
+            <Record Type="UI.ReferenceFacet">
+              <PropertyValue Property="Label" String="Issues"/>
+              <PropertyValue Property="Target" AnnotationPath="Issues/@UI.LineItem"/>
+            </Record>
+          </Collection>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="JIRA.Issue">
+        <Annotation Term="UI.HeaderInfo">
+          <Record>
+            <PropertyValue Property="TypeName" String="Issue"/>
+            <PropertyValue Property="TypeNamePlural" String="Issues"/>
+            <PropertyValue Property="ImageUrl" String="/images/exobj/service-request/request_grey_48.png"/>
+            <PropertyValue Property="Title">
+              <Record>
+                <PropertyValue Property="Value" Path="Key"/>
+              </Record>
+            </PropertyValue>
+            <PropertyValue Property="Description">
+              <Record>
+                <PropertyValue Property="Value" Path="Summary"/>
+              </Record>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.Identification">
+          <Collection>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Label" String="Summary"/>
+              <PropertyValue Property="Value" Path="Summary"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Label" String="Priority"/>
+              <PropertyValue Property="Value" Path="Priority"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Label" String="Reporter"/>
+              <PropertyValue Property="Value" Path="Reporter"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Label" String="Assignee"/>
+              <PropertyValue Property="Value" Path="Assignee"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Label" String="Status"/>
+              <PropertyValue Property="Value" Path="Status"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Label" String="Fix Version"/>
+              <PropertyValue Property="Value" Path="FixVersion"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Label" String="Updated At"/>
+              <PropertyValue Property="Value" Path="Updated"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Label" String="Issue Type"/>
+              <PropertyValue Property="Value" Path="IssueType"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Label" String="Affected Versions"/>
+              <PropertyValue Property="Value" Path="AffectedVersions"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Label" String="Components"/>
+              <PropertyValue Property="Value" Path="Components"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Label" String="Labels"/>
+              <PropertyValue Property="Value" Path="Labels"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Label" String="Resolution"/>
+              <PropertyValue Property="Value" Path="Resolution"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Label" String="Created At"/>
+              <PropertyValue Property="Value" Path="Created"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Label" String="Resolved At"/>
+              <PropertyValue Property="Value" Path="Resolved"/>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.LineItem">
+          <Collection>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Label" String="Key/Summary"/>
+              <PropertyValue Property="Value">
+                <Apply Function="odata.concat">
+                  <Path>Key</Path>
+                  <String> - </String>
+                  <Path>Summary</Path>
+                </Apply>
+              </PropertyValue>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Label" String="Priority"/>
+              <PropertyValue Property="Value" Path="Priority"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Label" String="Reporter"/>
+              <PropertyValue Property="Value" Path="Reporter"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Label" String="Assignee"/>
+              <PropertyValue Property="Value" Path="Assignee"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Label" String="Status"/>
+              <PropertyValue Property="Value" Path="Status"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Label" String="Resolution"/>
+              <PropertyValue Property="Value" Path="Resolution"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Label" String="Fix Version"/>
+              <PropertyValue Property="Value" Path="FixVersion"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Label" String="Components"/>
+              <PropertyValue Property="Value" Path="Components"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Label" String="Updated At"/>
+              <PropertyValue Property="Value" Path="Updated"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Label" String="Key"/>
+              <PropertyValue Property="Value" Path="Key"/>
+            </Record>
+          </Collection>
+        </Annotation>
+      </Annotations>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

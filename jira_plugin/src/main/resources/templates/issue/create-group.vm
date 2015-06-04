@@ -1,0 +1,59 @@
+<html>
+
+<head>
+    <title>Create Group</title>
+</head>
+
+<body>
+  <form action="/secure/CreateGroupAction.jspa" class="aui" method="post">
+    <div class="form-body">
+      <div class="hidden">
+          <input name="atl_token" type="hidden" value="${action.xsrfToken}">
+      </div>
+      <h2 class="dialog-title">$i18n.getText("sapjam.issue.action.create_group")</h2>
+      <div class="hidden">
+          <input name="id" type="hidden" value="${action.id}">
+          <input name="returnUrl" type="hidden" value="${action.returnUrl}">
+      </div>
+      <fieldset>
+        <div class="field-group">
+          <label>$i18n.getText("sapjam.issue.dialog.create_group.group_template")</label>
+          <select name="groupTemplate">
+  #foreach($template in $action.GroupTemplates)
+            <option value="${template.TemplateId}">${template.Title}</option>
+  #end
+            <option value="">$i18n.getText("sapjam.issue.dialog.create_group.no_template")</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label>$i18n.getText("sapjam.issue.dialog.create_group.name")</label>
+          <textarea name="groupName" class="textarea long-field" rows="1">$!{action.groupName}</textarea>
+        </div>
+
+        <div class="field-group">
+          <label>$i18n.getText("sapjam.issue.dialog.create_group.description")</label>
+          <textarea name="groupDescription" class="textarea long-field" rows="3">$!{action.groupDescription}</textarea>
+        </div>
+
+        <div class="field-group">
+          <label>$i18n.getText("sapjam.issue.dialog.create_group.group_type")</label>
+          <select name="groupType">
+            <option value="public_internal">$i18n.getText("sapjam.issue.dialog.create_group.group_type.public")</option>
+            <option value="private_internal">$i18n.getText("sapjam.issue.dialog.create_group.group_type.private")</option>
+            <option value="private_external">$i18n.getText("sapjam.issue.dialog.create_group.group_type.external")</option>
+          </select>
+        </div>
+      </fieldset>
+
+      <div class="buttons-container form-footer">
+          <div class="buttons">
+              <input class="button" id="create-group-submit" type="submit" value="$i18n.getText("sapjam.issue.dialog.create_group.create")">
+              <a class="cancel" href="/browse/${action.issue.key}" id="create-group-cancel">$i18n.getText("sapjam.issue.dialog.create_group.cancel")</a>
+          </div>
+      </div>
+    </form>
+  </div>
+</body>
+
+</html>

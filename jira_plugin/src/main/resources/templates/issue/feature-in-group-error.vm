@@ -1,0 +1,3 @@
+<h1>$i18n.getText("sapjam.issue.dialog.feature_in_group.error")</h1>
+
+<p>$action.errorMessage</p>

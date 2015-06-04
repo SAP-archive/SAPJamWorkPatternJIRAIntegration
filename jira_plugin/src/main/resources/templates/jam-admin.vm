@@ -1,0 +1,34 @@
+<html>
+  <head>
+    <title>SAP Jam Plugin Administration</title>
+    <meta name="decorator" content="atl.admin">
+	$webResourceManager.requireResource("com.atlassian.auiplugin:ajs")
+  </head>
+  <body>
+    <form id="admin" class="aui" action="" method="POST">
+      <div class="field-group">
+        <label for="sapjam_url">SAP Jam Base URL</label>
+        <input type="text" class="text" id="sapjam_url" name="sapjam_url" value="$sapjam_url">
+      </div>
+      <div class="field-group">
+        <label for="oauth_id">OAuth Client ID</label>
+        <input type="text" class="text" id="oauth_id" name="oauth_id" value="$oauth_id">
+      </div>
+      <div class="field-group">
+        <label for="idp_id">SAML IDP ID</label>
+        <input type="text" class="text" id="idp_id" name="idp_id" value="$idp_id">
+      </div>
+      <div class="field-group">
+        <label for="saml_key">Signing Key</label>
+        <textarea class="textarea" rows="6" id="saml_key" name="saml_key">$saml_key</textarea>
+      </div>
+      <div class="field-group">
+        <label for="saml_certificate">Signing Certificate</label>
+        <textarea class="textarea" rows="6" id="saml_certificate" name="saml_certificate">$saml_certificate</textarea>
+      </div>
+      <div class="field-group">
+        <input type="submit" value="Save" class="button">
+      </div>
+    </form>
+  </body>
+</html>

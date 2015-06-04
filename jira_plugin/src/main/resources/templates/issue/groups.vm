@@ -1,0 +1,7 @@
+<div id="jam-issue-groups">
+<ul>
+#foreach ($group in $groups)
+	<li><a href="$group.WebURL" target="$group.Id">$group.Name</a></li>
+#end
+</ul>
+</div>

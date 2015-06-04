@@ -1,0 +1,27 @@
+<div id="jam-feed-container" style="width: 100%; height: 400px;">
+</div>
+
+<script type="text/javascript" src="$!jamUrl/assets/feed_widget_v1.js"></script>
+<script>
+  jQuery(document).ready(function() {
+    _.defer(function() {
+      sapjam.feedWidget.init("$!jamUrl/widget/v1/feed", "single_use_token");
+      var w = sapjam.feedWidget.create('jam-feed-container', {
+        type: "external", 
+        avatar: true, 
+        external_id: "$!exidHtml", 
+        external_type: "$!objectTypeHtml", 
+        external_object: {
+          name: "$!name",
+          annotation_url: "$!annotationsHtml",
+          metadata_url: "$!metadataHtml",
+          odata_url: "$!linkHtml",
+          ui_url: "$!permalinkHtml"
+        },
+        post_mode: "inline", 
+        reply_mode: "inline",
+        single_use_token: "$loginToken"
+      });
+    });
+  });
+</script>
