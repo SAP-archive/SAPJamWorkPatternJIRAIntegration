@@ -35,7 +35,7 @@ public class JamManifestProducer implements ManifestProducer {
             }
 
             public URI getIconUrl() {
-                return URI.create("https://jam4.sapjam.com/images/cubetree_global/body/sap/sap-logo.png");
+                return URI.create("https://developer.sapjam.com/images/cubetree_global/body/sap/sap-logo.png");
             }
 
             public ApplicationId getId() {
