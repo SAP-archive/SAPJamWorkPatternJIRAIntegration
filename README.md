@@ -64,7 +64,6 @@ SAP Jam assertion in calls to JIRA.
 based on user's email address. Ensure the email address in Jam user profile 
 matches that of in the JIRA user profile.**
   4. From the JIRA Incoming Authentication screen, copy/paste the Client ID and Client Secret into the OAuth 2.0 Client Id and Secret fields respectively.
-  5. Fill in the host/port for JIRA and use "/jira/plugins/servlet/sapjam/auth/token" as the token path
   6. Copy/paste from JIRA Incoming Authentication the IdP ID as the Service Provider Name
   7. Scope is left blank.
   8. Select the respective JIRA OAuth client under the "Select Trusted OAuth Client" dropdown (optimize away security callbacks to JIRA if OAuth client is trusted)
