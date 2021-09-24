@@ -1,3 +1,8 @@
+![](https://img.shields.io/badge/STATUS-NOT%20CURRENTLY%20MAINTAINED-red.svg?longCache=true&style=flat)
+
+# Important Notice
+This public repository is read-only and no longer maintained.
+
 # About
 This README provides information and instructions on how to install and 
 configure the sample integration between SAP Jam and Atlassian JIRA to support 
